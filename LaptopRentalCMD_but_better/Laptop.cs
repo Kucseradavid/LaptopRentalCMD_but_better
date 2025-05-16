@@ -26,5 +26,18 @@ namespace LaptopRentalCMD_but_better
             this.DailyFee = dailyfee;
             this.Deposit = deposit;
         }
+
+        public Laptop (string sor)
+        {
+            string[] soradatok = sor.Split(";");
+
+            this.InvNumber = soradatok[6];
+            this.Model = soradatok[7];
+            this.County = soradatok[8];
+            this.RAM = Convert.ToInt32(soradatok[9]);
+            this.Color = soradatok[10];
+            this.DailyFee = Convert.ToInt32(soradatok[11]);
+            this.Deposit = Convert.ToInt32(soradatok[12]);
+        }
     }
 }

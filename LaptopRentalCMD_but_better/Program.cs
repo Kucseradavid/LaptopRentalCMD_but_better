@@ -1,4 +1,4 @@
-﻿namespace LaptopRentalCMD
+﻿namespace LaptopRentalCMD_but_better
 {
     internal class Program
     {
@@ -9,12 +9,15 @@
             StreamReader olvaso = new StreamReader("../../../laptoprentals2022.csv");
             olvaso.ReadLine(); //fejléc
             List<Rent> adatok = new List<Rent>();
+            List<Laptop> laptopok = new List<Laptop>();
 
             while (!olvaso.EndOfStream)
             {
                 string sor = olvaso.ReadLine();
                 Rent egyadat = new Rent(sor);
                 adatok.Add(egyadat);
+                Laptop egylaptop = new Laptop(sor);
+                laptopok.Add(egylaptop);
             }
 
             olvaso.Close();
@@ -31,17 +34,17 @@
 
             //4.feladat
             Console.WriteLine("4. feladat: Szürke Acer bérlések");
-            foreach (Rental adat in adatok)
+            foreach (Rent adat in adatok)
             {
-                if (adat.Color == "szürke" && adat.Model.IndexOf(@"Acer") != -1)
+                if (adat.Laptop.Color == "szürke" && adat.Laptop.Model.IndexOf(@"Acer") != -1)
                 {
-                    Console.WriteLine($"\t{adat.InvNumber} {adat.Model} --- {adat.PersonalID} {adat.Name}");
+                    Console.WriteLine($"\t{adat.Laptop.InvNumber} {adat.Laptop.Model} --- {adat.Client.PersonalID} {adat.Client.Name}");
                 }
             }
 
 
             //5.feladat
-            Console.WriteLine("5. feladat: Vármegyék, ahol a legkevesebb laptopot bérelték");
+            /*Console.WriteLine("5. feladat: Vármegyék, ahol a legkevesebb laptopot bérelték");
             List<string> varmegyek = new List<string>();
             int[] vmlaptopszamok = new int[19];
             for (int i = 0; i < adatok.Count; i++)
@@ -85,7 +88,7 @@
             }
             Console.WriteLine($"\t{legkisvm[0]} : {legkisvmszam[0]}");
             Console.WriteLine($"\t{legkisvm2[0]} : {legkisvmszam2[0]}");
-            Console.WriteLine("nem működik, ne is keresse");
+            Console.WriteLine("nem működik, ne is keresse");*/
 
 
             //6.feladat
@@ -110,12 +113,12 @@
                     //Console.WriteLine("is good"); //seems
                     good = true;
                     bool vane = false;
-                    foreach (Rental adat in adatok)
+                    foreach (Rent adat in adatok)
                     {
-                        if (adat.InvNumber == bekert)
+                        if (adat.Laptop.InvNumber == bekert)
                         {
                             vane = true;
-                            Console.WriteLine($"\t{adat.InvNumber} {adat.Model} {adat.Color}");
+                            Console.WriteLine($"\t{adat.Laptop.InvNumber} {adat.Laptop.Model} {adat.Laptop.Color}");
                             break;
                         }
                     }
@@ -135,22 +138,22 @@
 
             //7.feladat
             int osszbevetel = 0;
-            foreach (Rental adat in adatok)
+            foreach (Rent adat in adatok)
             {
                 TimeSpan napokts = adat.EndDate - adat.StartDate;
                 int napok = Convert.ToInt32(napokts.Days) + 1;
-                osszbevetel += napok * adat.DailyFee;
+                osszbevetel += napok * adat.Laptop.DailyFee;
                 if (adat.UseDeposit)
                 {
-                    osszbevetel += adat.Deposit;
+                    osszbevetel += adat.Laptop.Deposit;
                 }
             }
             Console.WriteLine($"7. feladat: A cég összes bevétele: {(Convert.ToInt32(osszbevetel).ToString("N"))/*.Remove(osszbevetel.ToString().Length-3)*/}Ft");
             //Console.WriteLine("I ain't botherin' with thousands at 10:44 PM espetially on Fridays");
 
             //8.feladat
-            Rental keresett = adatok[3];
-            Console.WriteLine($"8. feladat: Az {keresett.InvNumber} leltári számú laptop bérlésenkénti átlagos üzemideje: {keresett.AvgUpTime(adatok)} óra");
+            Rent keresett = adatok[3];
+            Console.WriteLine($"8. feladat: Az {keresett.Laptop.InvNumber} leltári számú laptop bérlésenkénti átlagos üzemideje: {keresett.AvgUpTime(adatok)} óra");
         }
     }
 }
