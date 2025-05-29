@@ -44,21 +44,21 @@
 
 
             //5.feladat
-            /*Console.WriteLine("5. feladat: Vármegyék, ahol a legkevesebb laptopot bérelték");
+            Console.WriteLine("5. feladat: Vármegyék, ahol a legkevesebb laptopot bérelték");
             List<string> varmegyek = new List<string>();
             int[] vmlaptopszamok = new int[19];
             for (int i = 0; i < adatok.Count; i++)
             {
-                if (varmegyek.Contains(adatok[i].County))
+                if (!varmegyek.Contains(adatok[i].Laptop.County))
                 {
-                    varmegyek.Add(adatok[i].County);
+                    varmegyek.Add(adatok[i].Laptop.County);
                 }
             }
             for (int i = 0; i < varmegyek.Count; i++)
             {
-                foreach (Rental adat in adatok)
+                foreach (Rent adat in adatok)
                 {
-                    if (varmegyek[i] == adat.County)
+                    if (varmegyek[i] == adat.Laptop.County)
                     {
                         vmlaptopszamok[i]++;
                     }
@@ -88,7 +88,7 @@
             }
             Console.WriteLine($"\t{legkisvm[0]} : {legkisvmszam[0]}");
             Console.WriteLine($"\t{legkisvm2[0]} : {legkisvmszam2[0]}");
-            Console.WriteLine("nem működik, ne is keresse");*/
+            //Console.WriteLine("nem működik, ne is keresse");
 
 
             //6.feladat
@@ -99,7 +99,7 @@
                 Console.Write("\tA keresett leltári szám: ");
                 string bekert = Console.ReadLine();
                 bool inte = false;
-                if (bekert.Length >= 8)
+                if (bekert.Length == 9)
                 {
                     inte = int.TryParse(bekert.Substring(3, 5), out _);
                 }
